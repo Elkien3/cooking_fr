@@ -934,7 +934,7 @@ foodspoil_register("farming:pumpkin_slice", 60)
 cooking.register_craft({
 	type = "cut",
 	recipe = "farming:pumpkin_8",
-	output = "cooking_fr:pumpkin_slice 4"
+	output = "farming:pumpkin_slice 4"
 })
 cooking.register_craft({
 	type = "cut",
