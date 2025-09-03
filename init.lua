@@ -935,6 +935,17 @@ foodspoil_register("cooking_fr:pumpkin_pie", fs_m)
 foodspoil_register("farming:pumpkin_slice", 60)
 
 cooking.register_craft({
+	type = "cut",
+	recipe = "farming:pumpkin_8",
+	output = "farming:pumpkin_slice 4"
+})
+cooking.register_craft({
+	type = "cut",
+	recipe = "farming:melon_8",
+	output = "farming:melon_slice 4"
+})
+
+cooking.register_craft({
 	type = "stack",
 	recipe = {"cooking:pie_crust", "farming:rhubarb", "farming:rhubarb", "cooking:sugar", "cooking:pie_crust"},
 	output = "cooking_fr:rhubarb_pie_uncooked"
