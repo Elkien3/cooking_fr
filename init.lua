@@ -931,8 +931,8 @@ minetest.register_craftitem("cooking_fr:pumpkin_pie", {
     inventory_image = "cooking_pumpkin_pie.png",
 	on_use = minetest.item_eat(10)
 })
-foodspoil_register("cooking_fr:pumpkin_pie", fs_m)
-foodspoil_register("farming:pumpkin_slice", 60)
+fs_reg("cooking_fr:pumpkin_pie", fs_m)
+fs_reg("farming:pumpkin_slice", 60)
 
 cooking.register_craft({
 	type = "stack",
