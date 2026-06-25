@@ -106,6 +106,26 @@ core.register_craftitem("cooking_fr:tomato_sliced", {
 })
 fs_reg("cooking_fr:tomato_sliced", fs_m)
 
+core.register_craftitem("cooking_fr:chocolate_chopped", {
+	description = S("Chopped Chocolate"),
+	inventory_image = "cooking_chocolate_chopped.png",
+})
+fs_reg("cooking_fr:chocolate_chopped", fs_s)
+
+cooking.register_craft({
+	type = "cut",
+	recipe = "farming:melon_8",
+	output = {"farming:melon_slice 4"}
+})
+fs_reg("farming:melon_slice", fs_m)
+
+cooking.register_craft({
+	type = "cut",
+	recipe = "farming:pumpkin_8",
+	output = {"farming:pumpkin_slice 4"}
+})
+fs_reg("farming:pumpkin_slice", fs_m)
+
 cooking.register_craft({
 	type = "cut",
 	recipe = "farming:pepper",
@@ -126,6 +146,11 @@ cooking.register_craft({
 	recipe = "farming:tomato",
 	output = {"cooking_fr:tomato_sliced 4"}
 })
+cooking.register_craft({
+	type = "cut",
+	recipe = "cooking_fr:chocolate",
+	output = {"cooking_fr:chocolate_chopped 2"}
+})
 
 --butter and cheese
 core.register_craftitem("cooking_fr:butter", {
@@ -137,6 +162,7 @@ fs_reg("cooking_fr:butter", fs_s)
 core.register_craftitem("cooking_fr:cheese", {
 	description = S("Cheese"),
 	inventory_image = "mobs_cheese.png",
+	on_use = core.item_eat(2),
 })
 fs_reg("cooking_fr:cheese", fs_s)
 
@@ -439,11 +465,6 @@ cooking.register_craft({
 	output = "cooking_fr:heartstopper"
 })
 cooking.register_craft({
-	type = "cut",
-	recipe = "cooking_fr:bun_cooked",
-	output = "cooking_fr:bun_top,cooking_fr:bun_bottom"
-})
-cooking.register_craft({
 	type = "press",
 	recipe = "mobs:meat_raw",
 	output = "cooking_fr:ground_beef_uncooked 2"
@@ -472,6 +493,7 @@ core.register_craftitem("cooking_fr:rice_uncooked", {
 	--stack_max = 1,
 	inventory_image = "cooking_rice_uncooked.png",
 	param2 = 94,
+	_cookingsimple = true
 })
 fs_reg("cooking_fr:rice_uncooked", fs_s)
 
@@ -627,7 +649,7 @@ season_salt_butter_garlic("cooking_fr:potato_mashed", nil, 6, "Mashed Potato", "
 cooking.register_craft({
 	type = "mix",
 	recipe = {"cooking_fr:garlic_powder", "farming:salt", "farming:peppercorn", "cooking_fr:butter", "cooking_fr:potato_chopped", "cooking_fr:potato_chopped", "cooking_fr:potato_chopped"},
-	output = "cooking_fr:potato_fries_uncooked"
+	output = "cooking_fr:potato_fries_uncooked 4"
 })
 cooking.register_craft({
 	type = "oven",
@@ -706,6 +728,66 @@ for i, itemname in pairs({"cooking_fr:fish", "cooking_fr:meat", "cooking_fr:chic
 	end
 end
 
+--additional sandwiches
+
+core.register_craftitem("cooking_fr:blueberry_jam_sandwich", {
+	description = S("Blueberry Jam Sandwich"),
+	inventory_image = "cooking_blueberry_jam_sandwich.png",
+	on_use = core.item_eat(6),
+	_cookingsimple = true
+})
+fs_reg("cooking_fr:blueberry_jam_sandwich", fs_m)
+
+core.register_craftitem("cooking_fr:strawberry_jam_sandwich", {
+	description = S("Strawberry Jam Sandwich"),
+	inventory_image = "cooking_strawberry_jam_sandwich.png",
+	on_use = core.item_eat(6),
+	_cookingsimple = true
+})
+fs_reg("cooking_fr:strawberry_jam_sandwich", fs_m)
+
+core.register_craftitem("cooking_fr:cheese_sandwich", {
+	description = S("Cheese Sandwich"),
+	inventory_image = "cooking_cheese_sandwich.png",
+	on_use = core.item_eat(6),
+	_cookingsimple = true
+})
+fs_reg("cooking_fr:cheese_sandwich", fs_m)
+
+core.register_craftitem("cooking_fr:cheese_sandwich_grilled", {
+	description = S("Grilled Cheese Sandwich"),
+	inventory_image = "cooking_cheese_sandwich_grilled.png",
+	on_use = core.item_eat(7),
+	_cookingsimple = true
+})
+fs_reg("cooking_fr:cheese_sandwich", fs_m)
+
+cooking.register_craft({
+	type = "stack",
+	recipe = {"cooking:bread_sliced", "cooking:blueberry_jam", "cooking:bread_sliced"},
+	output = "cooking_fr:blueberry_jam_sandwich"
+})
+
+cooking.register_craft({
+	type = "stack",
+	recipe = {"cooking:bread_sliced", "cooking_fr:strawberry_jam", "cooking:bread_sliced"},
+	output = "cooking_fr:strawberry_jam_sandwich"
+})
+
+cooking.register_craft({
+	type = "stack",
+	recipe = {"cooking:bread_sliced", "cooking_fr:cheese_sliced", "cooking:bread_sliced"},
+	output = "cooking_fr:cheese_sandwich"
+})
+
+cooking.register_craft({
+	type = "oven",
+	cooktime = 6,
+	recipe = "cooking_fr:cheese_sandwich",
+	output = "cooking_fr:cheese_sandwich_grilled"
+})
+
+
 --eggs
 
 core.register_craftitem("cooking_fr:egg_fried", {
@@ -725,6 +807,7 @@ fs_reg("cooking_fr:egg_fried_salted", fs_f)
 core.register_craftitem("cooking_fr:egg_scrambled_uncooked", {
 	description = S("Uncooked Scrambled Egg"),
 	inventory_image = "cooking_egg_scrambled_uncooked.png",
+	_cookingsimple = true
 })
 fs_reg("cooking_fr:egg_scrambled_uncooked", fs_f)
 
@@ -810,7 +893,8 @@ cooking.register_craft({
 core.register_craftitem("cooking_fr:garlic_bread_uncooked", {
 	description = S("Uncooked Garlic Bread"),
 	inventory_image = "cooking_garlic_bread_uncooked.png",
-	on_use = core.item_eat(4)
+	on_use = core.item_eat(4),
+	_cookingsimple = true
 })
 fs_reg("cooking_fr:garlic_bread_uncooked", fs_m)
 
@@ -832,43 +916,34 @@ cooking.register_craft({
 	output = "cooking_fr:garlic_bread"
 })
 
---coffee:
-local coffeecup = "vessels:drinking_glass"
-if not core.get_modpath("vessels") then
-	core.register_craftitem("cooking_fr:coffee_cup", {
-		description = S("Coffee Cup"),
-		inventory_image = "farming_coffee_cup.png",
-	})
-	coffeecup = "cooking_fr:coffee_cup"
-end
-core.register_craftitem("cooking_fr:coffee_ground", {
-    description = S("Ground Coffee Beans"),
-    inventory_image = "cooking_coffee_ground.png",
+--coffee items:
+core.register_craftitem("cooking_fr:glass_mug", {
+	description = S("Glass Mug"),
+	inventory_image = "cooking_mug.png",
+	_soup_swap = true
 })
-fs_reg("cooking_fr:coffee_ground", fs_s)
 
-core.register_craftitem("cooking_fr:coffee_uncooked", {
-    description = S("Cup of Uncooked Coffee"),
-	_soup_container = coffeecup,
-	_soup_item = coffeecup,
-    inventory_image = "farming_coffee_cup.png",
-	param2 = 212,
+core.register_craft({
+	recipe = {
+		{"default:glass", "", "default:glass"},
+		{"default:glass", "", "default:glass"},
+		{"default:glass", "default:glass", ""}
+	},
+	output = "cooking_fr:glass_mug 12"
 })
-fs_reg("cooking_fr:coffee_uncooked", fs_f)
 
-core.register_craftitem("cooking_fr:coffee", {
-    description = S("Cup of Coffee"),
-	_soup_container = coffeecup,
-	param2 = 211,
-    inventory_image = "farming_coffee_cup.png",
-	on_use = core.item_eat(4, coffeecup)
+core.register_craft({
+	recipe = {
+		{"cooking_fr:glass_mug", "cooking_fr:glass_mug"}
+	},
+	output = "vessels:glass_fragments"
 })
-fs_reg("cooking_fr:coffee", fs_f)
 
 core.register_craftitem("cooking_fr:coffee_filter", {
     description = S("Coffee Filter"),
     inventory_image = "cooking_coffee_filter.png",
 })
+
 core.register_craft({
 	recipe = {
 		{"default:paper", "", "default:paper"},
@@ -876,35 +951,189 @@ core.register_craft({
 	},
 	output = "cooking_fr:coffee_filter 12"
 })
+
+core.register_craftitem("cooking_fr:coffee_ground", {
+    description = S("Ground Coffee Beans"),
+    inventory_image = "cooking_coffee_ground.png",
+})
+fs_reg("cooking_fr:coffee_ground", fs_s)
+
 cooking.register_craft({
 	type = "press",
 	recipe = "farming:coffee_beans",
 	output = "cooking_fr:coffee_ground"
 })
-cooking.register_craft({
-	type = "soup",
-	param2 = 6,
-	recipe = {"cooking_fr:coffee_filter", "cooking_fr:coffee_ground"},
-	output = "cooking_fr:coffee_uncooked"
+
+core.register_craftitem("cooking_fr:glass_mug_with_filter", {
+	description = S("Glass Mug with Coffee Filter"),
+	inventory_image = "cooking_mug_with_coffee_filter.png",
+	_soup_swap = true,
+	_cookingsimple = true
 })
 cooking.register_craft({
+	type = "stack",
+	recipe = {"cooking_fr:glass_mug", "cooking_fr:coffee_filter"},
+	output = {"cooking_fr:glass_mug_with_filter"}
+})
+--make the craft reversible
+cooking.register_craft({
+	type = "stack",
+	recipe = {"cooking_fr:glass_mug_with_filter"},
+	output = {"cooking_fr:glass_mug", "cooking_fr:coffee_filter"}
+})
+
+--coffee:
+local coffeecup = "cooking_fr:glass_mug_with_filter"
+
+core.register_craftitem("cooking_fr:coffee_uncooked", {
+    description = S("Uncooked Coffee"),
+	_soup_container = coffeecup,
+    inventory_image = "cooking_coffee_uncooked.png",
+	param2 = 212,
+	on_use = core.item_eat(1, "cooking_fr:glass_mug"),
+	_cookingsimple = true
+})
+fs_reg("cooking_fr:coffee_uncooked", fs_f)
+
+cooking.register_craft({
+	type = "soup",
+	param2 = 15,
+	recipe = {"cooking_fr:coffee_ground"},
+	output = "cooking_fr:coffee_uncooked",
+	_cookingsimple = true
+})
+
+core.register_craftitem("cooking_fr:coffee", {
+    description = S("Hot Coffee"),
+	_soup_container = coffeecup,
+	param2 = 211,
+    inventory_image = "cooking_coffee.png",
+	on_use = core.item_eat(4, "cooking_fr:glass_mug"),
+	_cookingsimple = true
+})
+fs_reg("cooking_fr:coffee", fs_f)
+
+cooking.register_craft({
 	type = "stove",
-	cooktime = 6,
+	cooktime = 15,
 	recipe = "cooking_fr:coffee_uncooked",
 	output = "cooking_fr:coffee"
 })
 
---Pies
+core.register_craftitem("cooking_fr:coffee_sweetened", {
+    description = S("Sweetened Hot Coffee"),
+	_soup_container = coffeecup,
+	param2 = 211,
+    inventory_image = "cooking_coffee.png",
+	on_use = core.item_eat(5, "cooking_fr:glass_mug"),
+	_cookingsimple = true
+})
+fs_reg("cooking_fr:coffee_sweetened", fs_f)
+
+cooking.register_craft({
+	type = "stack",
+	recipe = {"cooking_fr:coffee", "cooking:sugar"},
+	output = "cooking_fr:coffee_sweetened",
+})
+
+--hot chocolate
+core.register_craftitem("cooking_fr:hot_chocolate_uncooked", {
+    description = S("Uncooked Hot Chocolate"),
+	_soup_container = "cooking_fr:glass_mug",
+    inventory_image = "cooking_hot_chocolate_uncooked.png",
+	on_use = core.item_eat(1, "cooking_fr:glass_mug"),
+	param2 = 1
+})
+fs_reg("cooking_fr:hot_chocolate_uncooked", fs_f)
+
+core.register_craftitem("cooking_fr:hot_chocolate", {
+    description = S("Hot Chocolate"),
+	_soup_container = "cooking_fr:glass_mug",
+	param2 = 211,
+    inventory_image = "cooking_hot_chocolate.png",
+	on_use = core.item_eat(6, "cooking_fr:glass_mug"),
+})
+fs_reg("cooking_fr:hot_chocolate", fs_f)
+
+cooking.register_craft({
+	type = "soup",
+	param2 = 1,
+	recipe = {"cooking_fr:chocolate_chopped", "cooking_fr:chocolate_chopped", "mobs:glass_milk", "mobs:glass_milk", "cooking:sugar"},
+	output = {"cooking_fr:hot_chocolate_uncooked", "vessels:drinking_glass 2"}
+})
+
+cooking.register_craft({
+	type = "stove",
+	cooktime = 12,
+	recipe = "cooking_fr:hot_chocolate_uncooked",
+	output = "cooking_fr:hot_chocolate"
+})
+
+--cookies
+core.register_craftitem("cooking_fr:cookie_dough", {
+    description = S("Cookie Dough"),
+    inventory_image = "cooking_cookie_dough.png",
+})
+fs_reg("cooking_fr:cookie_dough", fs_m)
+
+core.register_craftitem("cooking_fr:cookie_dough_chocolate", {
+    description = S("Chocolate Chip Cookie Dough"),
+    inventory_image = "cooking_cookie_dough_chocolate.png",
+})
+fs_reg("cooking_fr:cookie_dough_chocolate", fs_m)
+
+core.register_craftitem("cooking_fr:cookie", {
+    description = S("Cookie"),
+    inventory_image = "cooking_cookie.png",
+	on_use = core.item_eat(4)
+})
+fs_reg("cooking_fr:cookie", fs_m)
+
+core.register_craftitem("cooking_fr:cookie_chocolate", {
+    description = S("Chocolate Chip Cookie"),
+    inventory_image = "cooking_cookie_chocolate.png",
+	on_use = core.item_eat(5)
+})
+fs_reg("cooking_fr:cookie_chocolate", fs_m)
+
+cooking.register_craft({
+	type = "stack",
+	recipe = {"farming:flour", "farming:wheat", "cooking_fr:butter", "cooking:sugar", "mobs:egg", "mobs:egg"},
+	output = "cooking_fr:cookie_dough 8"
+})
+
+cooking.register_craft({
+	type = "stack",
+	recipe = {"farming:flour", "farming:wheat", "cooking_fr:butter", "cooking:sugar", "mobs:egg", "mobs:egg", "cooking_fr:chocolate_chopped", "cooking_fr:chocolate_chopped"},
+	output = "cooking_fr:cookie_dough_chocolate 8"
+})
+
+cooking.register_craft({
+	type = "oven",
+	cooktime = 7,
+	recipe = "cooking_fr:cookie_dough",
+	output = "cooking_fr:cookie"
+})
+
+cooking.register_craft({
+	type = "oven",
+	cooktime = 7,
+	recipe = "cooking_fr:cookie_dough_chocolate",
+	output = "cooking_fr:cookie_chocolate"
+})
+
+
+--pies
 
 core.register_craftitem("cooking_fr:rhubarb_pie_uncooked", {
     description = S("Uncooked Rhubarb Pie"),
-    inventory_image = "farming_rhubarb_pie.png",
+    inventory_image = "cooking_rhubarb_pie_uncooked.png",
 })
 fs_reg("cooking_fr:rhubarb_pie_uncooked", fs_m)
 
 core.register_craftitem("cooking_fr:rhubarb_pie", {
     description = S("Rhubarb Pie"),
-    inventory_image = "farming_rhubarb_pie.png",
+    inventory_image = "cooking_rhubarb_pie.png",
 	on_use = core.item_eat(10)
 })
 fs_reg("cooking_fr:rhubarb_pie", fs_m)
@@ -995,6 +1224,7 @@ fs_reg("cooking_fr:donut_blueberry", fs_f)
 core.register_craftitem("cooking_fr:chocolate", {
     description = S("Chocolate"),
     inventory_image = "farming_chocolate_dark.png",
+	on_use = core.item_eat(2),
 })
 fs_reg("cooking_fr:chocolate", fs_s)
 
@@ -1021,14 +1251,14 @@ fs_reg("cooking_fr:strawberry_jam", fs_s)
 core.register_craftitem("cooking_fr:bread_strawberry_jam", {
 	description = S("Bread with Strawberry Jam"),
 	inventory_image = "cooking_bread_strawberry_jam.png",
-	on_use = core.item_eat(5),
+	on_use = core.item_eat(4),
 })
 fs_reg("cooking_fr:bread_strawberry_jam", fs_s)
 
 core.register_craftitem("cooking_fr:toast_strawberry_jam", {
 	description = S("Toast with Strawberry Jam"),
 	inventory_image = "cooking_toast_strawberry_jam.png",
-	on_use = core.item_eat(6),
+	on_use = core.item_eat(5),	
 })
 fs_reg("cooking_fr:toast_strawberry_jam", fs_m)
 
@@ -1197,6 +1427,7 @@ core.register_craftitem("cooking_fr:tomato_soup_uncooked", {
     description = "Uncooked Tomato Soup",
     inventory_image = "cooking_tomato_soup_uncooked.png",
 	param2 = 252,
+	_cookingsimple = true
 })
 fs_reg("cooking_fr:tomato_soup_uncooked", fs_m)
 
@@ -1668,6 +1899,13 @@ core.register_craftitem("cooking_fr:popcorn_sugared", {
 })
 fs_reg("cooking_fr:popcorn_sugared", fs_f)
 
+core.register_craftitem("cooking_fr:popcorn_buttered", {
+    description = S("Butter Popcorn"),
+    inventory_image = "cooking_popcorn_buttery.png",
+	on_use = core.item_eat(5)
+})
+fs_reg("cooking_fr:popcorn_buttered", fs_f)
+
 cooking.register_craft({
     type = "cut",
     recipe = "farming:corn",
@@ -1692,6 +1930,13 @@ cooking.register_craft({
     recipe = {"cooking_fr:unflavored_popcorn", "farming:salt"},
     output = {"cooking_fr:popcorn_salted"}
 })
+
+cooking.register_craft({
+    type = "mix",
+    recipe = {"cooking_fr:unflavored_popcorn", "farming:salt", "cooking_fr:butter"},
+    output = {"cooking_fr:popcorn_buttered"}
+})
+
 
 if core.get_modpath("cake") then
 	core.clear_craft({output = "cake:cake_uncooked"})
